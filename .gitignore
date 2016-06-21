@@ -31,3 +31,10 @@
 # Debug files
 *.dSYM/
 *.su
+
+# Eclipse C projects
+.project
+.cproject
+
+# Backup files
+*~
