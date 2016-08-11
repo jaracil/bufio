@@ -11,6 +11,7 @@
 
 #include <assert.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -85,4 +86,5 @@ int main() {
 	assert(bufio_is_empty(&buf));
 
 	puts("test passed");
+	return 0;
 }

@@ -86,7 +86,7 @@ void bufio_discard(bufio_t *p, ssize_t sz) {
 	int r = 0;
 	if (sz < 0) {
 		r = 1;
-		sz = abs(sz);
+		sz *= -1;
 	}
 	if (sz > (ssize_t)bufio_used(p)) sz = bufio_used(p);
 	if (r) {
