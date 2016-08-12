@@ -59,7 +59,7 @@ void bufio_shift(bufio_t *p);
 
 /* Discard data from bufio.
  * if sz > 0 data is discarded from bufio tail.
- * if sz < 0 data is discarded from bufio read.
+ * if sz < 0 data is discarded from bufio head.
  */
 void bufio_discard(bufio_t *p, ssize_t sz);
 
