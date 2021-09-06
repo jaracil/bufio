@@ -8,7 +8,6 @@
  *  home page (http://github.com/jaracil/bufio) for more info.
  */
 
-
 #ifndef BUFIO_H_
 #define BUFIO_H_
 
@@ -17,15 +16,24 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
+#ifdef OB_COMPAT
 typedef struct {
 	uint8_t *buf;
 	size_t rp;
 	size_t wp;
 	size_t cap;
 } bufio_t;
+#else
+typedef struct bufio_s bufio_t;
+#endif
 
+#ifdef OB_COMPAT
 /* Initialize and allocate bufio resources*/
 int bufio_init(bufio_t *p, size_t sz);
+#else
+/* Returns new bufio with sz capacity */
+bufio_t *bufio_new(size_t sz);
+#endif
 
 /* Free bufio resources */
 void bufio_free(bufio_t *p);
@@ -62,6 +70,12 @@ void bufio_shift(bufio_t *p);
  * if sz < 0 data is discarded from bufio head.
  */
 void bufio_discard(bufio_t *p, ssize_t sz);
+
+/* Discards data from tail. */
+void bufio_discard_tail(bufio_t *p, size_t sz);
+
+/* Discards data from head. */
+void bufio_discard_head(bufio_t *p, size_t sz);
 
 /* Discard all bufio data, bufio will be empty after this function call */
 void bufio_discard_all(bufio_t *p);
