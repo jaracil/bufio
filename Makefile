@@ -18,15 +18,12 @@ endif
 bufiotest: ${BUFIO_LIBS} bufiotest.o
 	$(CC) ${CFLAGS} ${LD_EXTRA_FLAGS} bufiotest.o -L. -lbufio -o $@ 
 
-
-ifndef OB_COMPAT
-%.o : %.c
-	$(CC) -c ${CFLAGS} ${INCLUDE_DIRS} $< -o $@ 
-else
+ifdef OB_COMPAT
 CFLAGS += -DOB_COMPAT
+endif
+
 %.o : %.c
 	$(CC) -c ${CFLAGS} ${INCLUDE_DIRS} $< -o $@ 
-endif
 
 ${SHARED_LIB}: ${LIB_OBJS}
 	$(CC) -shared $^ ${CFLAGS} ${LDFLAGS} -o $@ ${LDLIBS}
