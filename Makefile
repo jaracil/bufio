@@ -18,8 +18,8 @@ endif
 bufiotest: ${BUFIO_LIBS} bufiotest.o
 	$(CC) ${CFLAGS} ${LD_EXTRA_FLAGS} bufiotest.o -L. -lbufio -o $@ 
 
-ifdef OB_COMPAT
-CFLAGS += -DOB_COMPAT
+ifdef USE_OLD_API
+CFLAGS += -DUSE_OLD_API
 endif
 
 %.o : %.c
