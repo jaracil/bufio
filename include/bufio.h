@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 typedef struct {
 	uint8_t *buf;
 	size_t rp;
@@ -27,7 +27,7 @@ typedef struct {
 typedef struct bufio_s bufio_t;
 #endif
 
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 /* Initialize and allocate bufio resources*/
 int bufio_init(bufio_t *p, size_t sz);
 #else

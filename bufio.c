@@ -16,7 +16,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#ifndef OB_COMPAT
+#ifndef USE_OLD_API
 struct bufio_s {
 	uint8_t *buf;
 	size_t rp;
@@ -25,7 +25,7 @@ struct bufio_s {
 };
 #endif
 
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 int bufio_init(bufio_t *p, size_t sz) {
 	p->buf = malloc(sz + 1);
 	if (p->buf == NULL)
@@ -55,12 +55,12 @@ void bufio_free(bufio_t *p) {
 		if (p->buf != NULL) {
 			free(p->buf);
 		}
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 		p->buf = NULL;
 		free(p);
 #endif
 	}
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 	p->rp = 0;
 	p->wp = 0;
 	p->cap = 0;
