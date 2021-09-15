@@ -17,7 +17,7 @@ int main() {
 	int ch;
 	int pipefd[2];
 	uint8_t tmpbuf[2048];
-#ifdef OB_COMPAT
+#ifdef USE_OLD_API
 	bufio_t sbuf, sbuf2, *buf, *buf2;
 	buf = &sbuf;
 	buf2 = &sbuf2;
