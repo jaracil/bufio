@@ -36,6 +36,17 @@ int bufio_init(bufio_t *p, size_t sz) {
 	p->buf[0] = 0;
 	return 0;
 }
+
+void bufio_free(bufio_t *p) {
+	if (p->buf != NULL) {
+		free(p->buf);
+		p->buf = NULL;
+	}
+	p->rp = 0;
+	p->wp = 0;
+	p->cap = 0;
+}
+
 #else
 bufio_t *bufio_new(size_t sz) {
 	bufio_t *p = calloc(1, sizeof(bufio_t));
@@ -48,24 +59,16 @@ bufio_t *bufio_new(size_t sz) {
 	p->buf[0] = 0;
 	return p;
 }
-#endif
 
 void bufio_free(bufio_t *p) {
-	if (p->buf != NULL) {
+	if (p != NULL) {
 		if (p->buf != NULL) {
 			free(p->buf);
 		}
-#ifdef USE_OLD_API
-		p->buf = NULL;
 		free(p);
-#endif
 	}
-#ifdef USE_OLD_API
-	p->rp = 0;
-	p->wp = 0;
-	p->cap = 0;
-#endif
 }
+#endif
 
 int bufio_is_empty(bufio_t *p) {
 	return p->rp == p->wp;
