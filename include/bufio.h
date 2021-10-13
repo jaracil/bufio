@@ -23,14 +23,11 @@ typedef struct {
 	size_t wp;
 	size_t cap;
 } bufio_t;
-#else
-typedef struct bufio_s bufio_t;
-#endif
 
-#ifdef USE_OLD_API
 /* Initialize and allocate bufio resources*/
 int bufio_init(bufio_t *p, size_t sz);
 #else
+typedef struct bufio_s bufio_t;
 /* Returns new bufio with sz capacity */
 bufio_t *bufio_new(size_t sz);
 #endif

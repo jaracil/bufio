@@ -16,15 +16,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#ifndef USE_OLD_API
-struct bufio_s {
-	uint8_t *buf;
-	size_t rp;
-	size_t wp;
-	size_t cap;
-};
-#endif
-
 #ifdef USE_OLD_API
 int bufio_init(bufio_t *p, size_t sz) {
 	p->buf = malloc(sz + 1);
@@ -48,6 +39,13 @@ void bufio_free(bufio_t *p) {
 }
 
 #else
+struct bufio_s {
+	uint8_t *buf;
+	size_t rp;
+	size_t wp;
+	size_t cap;
+};
+
 bufio_t *bufio_new(size_t sz) {
 	bufio_t *p = calloc(1, sizeof(bufio_t));
 	p->buf = malloc(sz + 1);
