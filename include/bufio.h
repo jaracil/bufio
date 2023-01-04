@@ -109,12 +109,15 @@ int bufio_peek_byte(bufio_t *p);
 /* File read into bufio (zero buffer copy) */
 ssize_t bufio_read(bufio_t *p, int fd);
 
-/* Socket read into bufio (zero buffer copy) */
-ssize_t bufio_recv(bufio_t *p, int fd, int flags);
-
 /* File write from bufio (zero buffer copy) */
 ssize_t bufio_write(bufio_t *p, int fd);
 
+#ifndef DISABLE_SOCKET
+/* Socket read into bufio (zero buffer copy) */
+ssize_t bufio_recv(bufio_t *p, int fd, int flags);
+
 /* Socket write from bufio (zero buffer copy) */
 ssize_t bufio_send(bufio_t *p, int fd, int flags);
+#endif
+
 #endif /* BUFIO_H_ */

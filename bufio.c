@@ -13,8 +13,11 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/socket.h>
 #include <unistd.h>
+
+#ifndef DISABLE_SOCKET
+#include <sys/socket.h>
+#endif
 
 #ifdef USE_OLD_API
 int bufio_init(bufio_t *p, size_t sz) {
@@ -253,6 +256,16 @@ ssize_t bufio_read(bufio_t *p, int fd) {
 	return res;
 }
 
+ssize_t bufio_write(bufio_t *p, int fd) {
+	ssize_t res;
+	res = write(fd, bufio_tail(p), bufio_used(p));
+	if (res < 0)
+		return res;
+	bufio_discard(p, res);
+	return res;
+}
+
+#ifndef DISABLE_SOCKET
 ssize_t bufio_recv(bufio_t *p, int fd, int flags) {
 	ssize_t res;
 	bufio_shift(p);
@@ -260,15 +273,6 @@ ssize_t bufio_recv(bufio_t *p, int fd, int flags) {
 	if (res < 0)
 		return res;
 	bufio_extend(p, res);
-	return res;
-}
-
-ssize_t bufio_write(bufio_t *p, int fd) {
-	ssize_t res;
-	res = write(fd, bufio_tail(p), bufio_used(p));
-	if (res < 0)
-		return res;
-	bufio_discard(p, res);
 	return res;
 }
 
@@ -280,3 +284,4 @@ ssize_t bufio_send(bufio_t *p, int fd, int flags) {
 	bufio_discard(p, res);
 	return res;
 }
+#endif

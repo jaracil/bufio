@@ -22,6 +22,10 @@ ifdef USE_OLD_API
 CFLAGS += -DUSE_OLD_API
 endif
 
+ifdef DISABLE_SOCKET
+CFLAGS += -DDISABLE_SOCKET
+endif
+
 %.o : %.c
 	$(CC) -c ${CFLAGS} ${INCLUDE_DIRS} $< -o $@ 
 
